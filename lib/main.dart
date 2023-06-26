@@ -1,3 +1,78 @@
+/*
+import 'package:flutter/material.dart';
+
+// don't forget this line
+import 'package:webview_flutter/webview_flutter.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      // Remove the debug banner
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primarySwatch: Colors.green),
+      title: "Krishi crowd funding",
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  MyHomePage({Key? key}) : super(key: key);
+
+  // Create a webview controller
+  final _controller = WebViewController()
+    ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    ..setNavigationDelegate(
+      NavigationDelegate(
+        onProgress: (int progress) {
+          // print the loading progress to the console
+          // you can use this value to show a progress bar if you want
+          debugPrint("Loading: $progress%");
+        },
+        onPageStarted: (String url) {},
+        onPageFinished: (String url) {},
+        onWebResourceError: (WebResourceError error) {},
+        onNavigationRequest: (NavigationRequest request) {
+          return NavigationDecision.navigate;
+        },
+      ),
+    )
+    ..loadRequest(Uri.parse("http://134.209.159.209/"));
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   title: const Text('Krishi Crowd Funding'),
+        // ),
+        body: SizedBox(
+            width: double.infinity,
+            // the most important part of this example
+            child: WebViewWidget(
+              controller: _controller,
+            )),
+      ),
+    );
+  }
+}
+
+*/
+
+
+
+
+
+
+
+
 import 'dart:async';
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
@@ -149,7 +224,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
                           key: webViewKey,
                           initialUrlRequest:
                           URLRequest(url: kPwaUri,),
-
+                            initialOptions: InAppWebViewGroupOptions(
+                              crossPlatform: InAppWebViewOptions(userAgent: "random"),),
                           initialUserScripts: UnmodifiableListView<UserScript>([
                             UserScript(
                                 source: """
