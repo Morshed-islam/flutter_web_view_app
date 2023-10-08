@@ -66,27 +66,41 @@ class MyHomePage extends StatelessWidget {
 
 */
 
-
-
-
-
-
-
-
 import 'dart:async';
 import 'dart:collection';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'firebase_api.dart';
+import 'notification_api.dart';
 import 'webview_popup.dart';
 import 'constants.dart';
 import 'util.dart';
 
+///todo if i use this code in here then its working fine
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   // If you're going to use other Firebase services in the background, such as Firestore,
+//   // make sure you call `initializeApp` before using other Firebase services.
+//   await Firebase.initializeApp();
+//
+//
+//   print("Handling a background message: ${message.messageId}");
+//   print("message: ${message.notification?.title ?? ''}");
+//   print("notifi: ${message.notification}");
+// }
+
 Future main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  await FirebaseApi().initNotifications();
   if (!kIsWeb &&
       kDebugMode &&
       defaultTargetPlatform == TargetPlatform.android) {
@@ -95,7 +109,7 @@ Future main() async {
   runApp( MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
-      title: "Krishi crowd funding",
+      title: "Agricare",
       home: MyApp()));
 }
 
@@ -171,6 +185,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     webViewController?.resumeTimers();
   }
 
+  void _launchWhatsApp() async {
+    String phoneNumber = '+8801329713976'; // Replace with the phone number you want to chat with, including country code
+    String message = 'Welcome to Agricare!Please Message Us to know more details!'; // Replace with your message
+
+    var whatsappUrl = 'whatsapp://send?phone=$phoneNumber&text=$message';
+
+    if (await canLaunch(whatsappUrl)) {
+      await launch(whatsappUrl);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error: Could not launch WhatsApp.'),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -187,7 +216,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       },
       child: SafeArea(
         child: Scaffold(
-
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 60.0),
+            child: FloatingActionButton(
+                onPressed: (){
+                  _launchWhatsApp();
+                },
+              child: Image.network('https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c543.png',),
+                ),
+          ),
             // appBar: AppBar(
             //   title: Text('Krishi Crowd Funding'),
             //

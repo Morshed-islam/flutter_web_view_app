@@ -1,7 +1,7 @@
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 // PWA Url
-final kPwaUri = WebUri('http://134.209.159.209/');
+final kPwaUri = WebUri('https://agricare.global/app');
 final kPwaHost = kPwaUri.host;
 
 // Custom HTML Error Page.

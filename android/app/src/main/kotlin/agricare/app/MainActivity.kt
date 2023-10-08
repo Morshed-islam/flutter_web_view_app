@@ -1,4 +1,4 @@
-package global.agrocareapp
+package agricare.app
 
 import io.flutter.embedding.android.FlutterActivity
 
