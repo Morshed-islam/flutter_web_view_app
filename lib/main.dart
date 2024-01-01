@@ -186,7 +186,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   void _launchWhatsApp() async {
-    String phoneNumber = '+8801329713976'; // Replace with the phone number you want to chat with, including country code
+    String phoneNumber = '+8801329713977'; // Replace with the phone number you want to chat with, including country code
     String message = 'Welcome to Agricare!Please Message Us to know more details!'; // Replace with your message
 
     var whatsappUrl = 'whatsapp://send?phone=$phoneNumber&text=$message';

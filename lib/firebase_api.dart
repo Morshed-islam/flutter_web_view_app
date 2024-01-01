@@ -35,7 +35,6 @@ class FirebaseApi {
     log("body: ${message.notification?.body}");
     log("payload: ${message.data}");
 
-
   }
 
 }
